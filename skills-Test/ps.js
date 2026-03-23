@@ -1,12 +1,12 @@
 // task-1
-function sqaureEven() {
+function squareEven() {
   const numbers = [1, 2, 3, 4, 5, 6];
   const even = numbers.filter((num) => num % 2 === 0);
-  const sqredEven = even.map((num) => num * num);
-  return sqredEven;
+  const squaredEven = even.map((num) => num * num);
+  return squaredEven;
 }
 
-const callSqrEvn = sqaureEven();
+const callSqrEvn = squareEven();
 // console.log(callSqrEvn);
 
 // task-2
@@ -26,7 +26,63 @@ const find18Plus = () => {
 };
 
 const call18Plus = find18Plus();
-console.log(call18Plus);
+// console.log(call18Plus);
+
+// task-4
+const user = {
+  name: "Gemini User",
+  age: 30,
+  email: "randomuser@gmail.com",
+  address: {
+    houseNo: "23h",
+    aria: "Mirpur DSH",
+    dist: "Dhaka",
+    city: "Dhaka",
+  },
+};
+function updateUser(user, updatedCity) {
+  const updatedUser = {
+    // shallow copy korle reference error dekha dite pare.
+    ...user,
+    address: {
+      ...user.address,
+      city: updatedCity,
+    },
+  };
+
+  //   console.log(updatedUser);
+}
+
+const callUpdateUser = updateUser(user, "CTG");
+console.log(callUpdateUser);
+
+// task-5
+let loading = false;
+const fetchingData = async () => {
+  try {
+    loading = true;
+    if (loading) {
+      console.log("loading...");
+    }
+
+    const res = await fetch("https://jsonplaceholder.typicode.co/users");
+    if (!res.ok) {
+      throw new Error("failed to data fetch!"); // এটি সরাসরি catch-এ পাঠিয়ে দিবে
+    }
+
+    console.log(res);
+  } catch (error) {
+    console.log(error.message, "from catch");
+  } finally {
+    loading = false;
+
+    if (!loading) {
+      console.log("operation end");
+    }
+  }
+};
+
+fetchingData();
 
 // Task 3: Difference Between map, filter, and forEach
 
