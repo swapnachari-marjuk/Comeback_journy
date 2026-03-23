@@ -12,12 +12,16 @@ const callSqrEvn = sqaureEven();
 // task-2
 const find18Plus = () => {
   const users = [
-    { name: "A", age: 18 },
-    { name: "B", age: 12 },
-    { name: "C", age: 19 },
+    { name: "A", age: 19 },
+    { name: "B", age: 23 },
+    { name: "C", age: 18 },
   ];
 
-  const eighteenPlus = users.filter((user) => user.age >= 18);
+  const eighteenPlus = users
+    .filter((user) => user.age >= 18)
+    .map((user) => ({ ...user, isVerified: true }))
+    .sort((a, b) => a.age - b.age);
+
   return eighteenPlus;
 };
 
