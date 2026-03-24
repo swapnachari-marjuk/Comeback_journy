@@ -82,7 +82,46 @@ const fetchingData = async () => {
   }
 };
 
-fetchingData();
+// fetchingData();
+
+// closure from gemini
+const randFunc = () => {
+  let num = 0; // এটি বাইরের ভেরিয়েবল (ম্যাজিক বক্সের চিরকুট)
+
+  function innerFunc() {
+    num = num + 1; // আমরা 'num' কে আপডেট করছি, নতুন ভেরিয়েবল নিচ্ছি না
+    console.log(num);
+  }
+
+  // আমরা পুরো ফাংশনটাকেই রিটার্ন করে দিচ্ছি
+  return innerFunc;
+};
+
+const callRandFunc = randFunc();
+// এখানে 'callRandFunc' এখন একটি ক্লোজার।
+// সে 'num' ভেরিয়েবলটাকে তার মেমোরিতে আটকে (Close) রেখেছে।
+
+// callRandFunc(); // আউটপুট: 1 (0 + 1)
+// callRandFunc(); // আউটপুট: 2 (1 + 1)
+// callRandFunc(); // আউটপুট: 3 (2 + 1)
+
+// task 6
+
+const cartSystem = () => {
+  let cartItems = 0;
+
+  const addItem = () => {
+    cartItems += 1;
+    console.log(cartItems);
+  };
+
+  return addItem;
+};
+
+const callCartSystem = cartSystem();
+callCartSystem();
+callCartSystem();
+callCartSystem();
 
 // Task 3: Difference Between map, filter, and forEach
 
@@ -94,5 +133,7 @@ fetchingData();
 // // The filter() method is used to select elements from an array based on a condition. It returns a new array containing only the elements that satisfy the condition.
 // forEach()
 // // The forEach() method is used to iterate over an array when performing side effects, such as logging or updating values. It does not return a new array.
-const num = [1, 2, 3, 4, 5];
-const printing = num.forEach((n) => console.log(n * 3)); // its just printing. nothing returned from it.
+
+// const num = [1, 2, 3, 4, 5];
+// const printing = num.forEach((n) => console.log(n * 3));
+// its just printing. nothing returned from it.
