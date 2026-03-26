@@ -1,6 +1,7 @@
 function getFromLS() {
   const tasks = localStorage.getItem("tasks");
   const retrievedTasks = JSON.parse(tasks) || [];
+  console.log(retrievedTasks);
   return retrievedTasks;
 }
 
@@ -14,6 +15,7 @@ function setToLS(newTask) {
 function getTask() {
   const taskInput = document.getElementById("taskInput").value;
   const task = {
+    _id: crypto.randomUUID(),
     taskName: taskInput,
     createdAt: new Date().toISOString(),
     taskStatus: "incomplete",
@@ -30,13 +32,15 @@ function showTasks() {
   const tasks = getFromLS();
   const taskList = document.getElementById("taskList");
 
-  tasks.map((task) => {
+  taskList.innerHTML = "";
+  tasks.forEach((task) => {
+    const checkedAttribute = task.taskStatus === "complete" ? "checked" : "";
     const taskItem = document.createElement("li");
     taskItem.innerHTML = `
-    <div class="flex justify-between">
+    <div  class="flex justify-between">
         <div>
-        <input type="checkbox"/>
-        <span>${task.taskName}</span>
+        <input id="status-${task._id}" ${checkedAttribute} type="checkbox"/>
+        <label for="status-${task._id}">${task.taskName}</label>
         </div>
         <span>${task.taskStatus}</span>
     </div>
