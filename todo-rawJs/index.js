@@ -42,13 +42,27 @@ function updateTask(taskId) {
   setToLS(updatedTasks);
 }
 
+function deleteTask(taskId) {
+  const tasks = getFromLS();
+  const remainingTasks = tasks.filter((task) => task._id !== taskId);
+  setToLS(remainingTasks);
+}
+
 const taskList = document.getElementById("taskList");
-taskList.addEventListener("change", (e) => {
+taskList.addEventListener("click", (e) => {
   if (e.target.type === "checkbox") {
     const fullId = e.target.id;
     const taskId = fullId.replace("status-", "");
     // console.log(taskId);
     updateTask(taskId);
+  }
+
+  if (e.target.id.includes("delete-")) {
+    const itemId = e.target.id.replace("delete-", "");
+    if (confirm("Are you sure to delete this task?")) {
+      // console.log(itemId);
+      deleteTask(itemId);
+    }
   }
 });
 
@@ -64,11 +78,17 @@ function showTasks() {
 
     taskItem.innerHTML = `
     <div  class="flex justify-between">
-        <div>
+      <div>
         <input id="status-${task._id}" ${checkedAttribute} type="checkbox"/>
         <label for="status-${task._id}" class="${task.isCompleted ? "line-through" : ""}">${task.taskName}</label>
-        </div>
-        <span>${task.isCompleted == true ? "Complete" : "Incomplete"}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-sm">${task.isCompleted ? "Complete" : "Incomplete"}</span>
+        <button id="delete-${task._id}" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition">
+            X
+        </button>
+    </div>
+       <!-- <span>${task.isCompleted == true ? "Complete" : "Incomplete"}</span> -->
     </div>
     `;
 
