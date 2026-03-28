@@ -7,7 +7,7 @@ function getFromLS() {
 
 function setToLS(allTasks) {
   localStorage.setItem("tasks", JSON.stringify(allTasks));
-  showTasks();
+  showFilteredTasks();
 }
 
 function getTaskInput() {
@@ -66,40 +66,88 @@ taskList.addEventListener("click", (e) => {
   }
 });
 
-function showTasks() {
-  const tasks = getFromLS();
+function showTasks(tasks) {
   const fragment = document.createDocumentFragment();
+  const noDataDiv = document.getElementById("no-data");
   // console.log(tasks, "from show task");
 
   taskList.innerHTML = "";
-  tasks.forEach((task) => {
-    const checkedAttribute = task.isCompleted === true ? "checked" : "";
-    const taskItem = document.createElement("li");
+  if (!tasks.length) {
+    noDataDiv.classList.remove("hidden");
+  } else {
+    tasks.forEach((task) => {
+      const checkedAttribute = task.isCompleted === true ? "checked" : "";
+      const taskItem = document.createElement("li");
 
-    taskItem.innerHTML = `
-    <div  class="flex justify-between">
-      <div>
-        <input id="status-${task._id}" ${checkedAttribute} type="checkbox"/>
-        <label for="status-${task._id}" class="${task.isCompleted ? "line-through" : ""}">${task.taskName}</label>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-sm">${task.isCompleted ? "Complete" : "Incomplete"}</span>
-        <button id="delete-${task._id}" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition">
-            X
-        </button>
-    </div>
-       <!-- <span>${task.isCompleted == true ? "Complete" : "Incomplete"}</span> -->
-    </div>
-    `;
+      taskItem.innerHTML = `
+              <div  class="flex justify-between">
+                  <div>
+                    <input id="status-${task._id}" ${checkedAttribute} type="checkbox"/>
+                    <label for="status-${task._id}" class="${task.isCompleted ? "line-through" : ""}">${task.taskName}</label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm">${task.isCompleted ? "Complete" : "Incomplete"}</span>
+                    <button id="delete-${task._id}" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition">
+                        X
+                    </button>
+                </div>
+              </div>
+            `;
 
-    // const checkbox = taskItem.querySelector(`#status-${task._id}`);
-    // checkbox.addEventListener("change", (e) => {
-    //   updateTask(task._id);
-    // });
-    fragment.appendChild(taskItem);
-  });
-
-  taskList.appendChild(fragment);
+      fragment.appendChild(taskItem);
+    });
+    taskList.appendChild(fragment);
+    noDataDiv.classList.add("hidden");
+  }
 }
 
-showTasks();
+let currentFilter = "all"; //global variable for filtering class
+function showFilteredTasks() {
+  const allTasks = getFromLS();
+  let tasksToDisplay = [];
+
+  // data filtering
+  if (currentFilter === "all") {
+    tasksToDisplay = allTasks;
+  } else if (currentFilter === "complete") {
+    tasksToDisplay = allTasks.filter((task) => task.isCompleted);
+  } else if (currentFilter === "incomplete") {
+    tasksToDisplay = allTasks.filter((task) => !task.isCompleted);
+  }
+
+  // calling active btn function
+  updateFilterButtonsUI();
+  // calling render function
+  showTasks(tasksToDisplay);
+}
+
+showFilteredTasks();
+
+// btn design update
+function updateFilterButtonsUI() {
+  const buttons = document.querySelectorAll("#filterContainer button");
+  buttons.forEach((btn) => {
+    if (btn.id === `btn-${currentFilter}`) {
+      btn.classList.add("btn-active");
+      btn.classList.remove("btn-deactivate");
+    } else {
+      btn.classList.remove("btn-active");
+      btn.classList.add("btn-deactivate");
+    }
+  });
+}
+
+function showAllTasks() {
+  currentFilter = "all";
+  showFilteredTasks();
+}
+
+function showIncomplete() {
+  currentFilter = "incomplete";
+  showFilteredTasks();
+}
+
+function showComplete() {
+  currentFilter = "complete";
+  showFilteredTasks();
+}

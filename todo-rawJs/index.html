@@ -12,6 +12,15 @@
         text-decoration: line-through;
         color: #9ca3af; /* gray-400 */
       }
+
+      .btn-active{
+        background-color: blue;
+        color: white;
+      }
+
+      .btn-deactivate{
+        background-color: #D1D5DB;
+      }
     </style>
   </head>
   <body class="bg-gray-100 min-h-screen flex justify-center py-12 px-4">
@@ -46,22 +55,29 @@
         />
 
         <div
-          class="flex justify-between items-center bg-gray-50 p-1 rounded-lg"
+          class="flex justify-between items-center bg-gray-100 p-1 rounded-lg"
+          id="filterContainer"
         >
           <button
-            class="filter-btn active flex-1 py-1 text-sm font-medium rounded-md bg-blue-600 text-white shadow-sm"
+            onclick="showAllTasks()"
+            id="btn-all"
+            class="filter-btn flex-1 py-1 text-sm font-medium rounded-md"
             data-filter="all"
           >
             All
           </button>
           <button
-            class="filter-btn flex-1 py-1 text-sm font-medium text-gray-500 hover:text-gray-700"
+            onclick="showIncomplete()"
+            id="btn-incomplete"
+            class="filter-btn flex-1 py-1 text-sm font-medium rounded-md"
             data-filter="active"
           >
             Active
           </button>
           <button
-            class="filter-btn flex-1 py-1 text-sm font-medium text-gray-500 hover:text-gray-700"
+            onclick="showComplete()"
+            id="btn-complete"
+            class="filter-btn flex-1 py-1 text-sm font-medium rounded-md"
             data-filter="all"
           >
             Completed
@@ -73,6 +89,10 @@
         id="taskList"
         class="divide-y divide-gray-100 max-h-96 overflow-y-auto pr-2"
       ></ul>
+
+      <div id="no-data" class="bg-gray-200 text-red-500 font-semibold text-center py-4 px-2 rounded-md">
+        <h2>No Todo Items found</h2>
+      </div>
 
       <div
         class="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500 font-medium"
