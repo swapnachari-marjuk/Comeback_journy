@@ -1,8 +1,11 @@
 function getFromLS() {
-  const tasks = localStorage.getItem("tasks");
-  const retrievedTasks = JSON.parse(tasks) || [];
-  // console.log(retrievedTasks);
-  return retrievedTasks;
+  try {
+    const tasks = localStorage.getItem("tasks");
+    return tasks ? JSON.parse(tasks) : [];
+  } catch (error) {
+    console.error("Data corruption detected:", error);
+    return []; 
+  }
 }
 
 function setToLS(allTasks) {
