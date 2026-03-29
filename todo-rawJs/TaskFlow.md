@@ -7,7 +7,6 @@ TaskFlow is a high-performance, lightweight Task Management application built wi
 - **Core:** JavaScript (ES6+)
 - **Styling:** Tailwind CSS
 - **Storage:** LocalStorage API
-- **Icons:** HeroIcons / Lucide (if used)
 
 ## ✨ Key Features
 - **Persistent Data:** Tasks remain saved even after page refresh using LocalStorage.
@@ -28,7 +27,8 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/your-username/taskflow.git](https://github.com/your-username/taskflow.git)
+   git clone https://github.com/swapnachari-marjuk
+
 
 2. **Open the project:**
 Simply open `index.html` in your browser or use the **Live Server** extension in VS Code for the best experience.
@@ -45,4 +45,5 @@ Through this project, I strengthened my understanding of core JavaScript concept
 ---
 
 ### 👨‍💻 Author
-**Ahmad Marjuk** *MERN Stack Developer* [LinkedIn](https://www.linkedin.com/in/ahmad-marjuk) | [Portfolio](https://marjuks-portfolio.vercel.app/)
+**Ahmad Marjuk** 
+*MERN Stack Developer* [LinkedIn](https://www.linkedin.com/in/ahmad-marjuk) | [Portfolio](https://marjuks-portfolio.vercel.app/)
