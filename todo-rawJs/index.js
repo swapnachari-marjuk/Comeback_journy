@@ -8,8 +8,10 @@ function getFromLS() {
 function setToLS(allTasks) {
   localStorage.setItem("tasks", JSON.stringify(allTasks));
   showFilteredTasks();
+  showTaskCount();
 }
 
+document.getElementById("addBtn").addEventListener("click", getTaskInput);
 function getTaskInput() {
   const taskInput = document.getElementById("taskInput");
   const task = {
@@ -46,6 +48,17 @@ function deleteTask(taskId) {
   const tasks = getFromLS();
   const remainingTasks = tasks.filter((task) => task._id !== taskId);
   setToLS(remainingTasks);
+}
+
+document
+  .getElementById("clearCompleted")
+  .addEventListener("click", deleteAllCompleted);
+function deleteAllCompleted() {
+  if (confirm("Are you sure to delete all completed tasks?")) {
+    const allTasks = getFromLS();
+    const remainingTasks = allTasks.filter((task) => !task.isCompleted);
+    setToLS(remainingTasks);
+  }
 }
 
 const taskList = document.getElementById("taskList");
@@ -137,17 +150,32 @@ function updateFilterButtonsUI() {
   });
 }
 
+document.getElementById("btn-all").addEventListener("click", showAllTasks);
 function showAllTasks() {
   currentFilter = "all";
   showFilteredTasks();
 }
 
+document
+  .getElementById("btn-incomplete")
+  .addEventListener("click", showIncomplete);
 function showIncomplete() {
   currentFilter = "incomplete";
   showFilteredTasks();
 }
 
+document.getElementById("btn-complete").addEventListener("click", showComplete);
 function showComplete() {
   currentFilter = "complete";
   showFilteredTasks();
 }
+
+function showTaskCount() {
+  const allTasks = getFromLS();
+  const incompleteTasks = allTasks.filter((task) => !task.isCompleted);
+  console.log(incompleteTasks);
+  const taskCount = document.getElementById("taskCount");
+  taskCount.innerText = `${incompleteTasks?.length} tasks left`;
+}
+
+showTaskCount();
