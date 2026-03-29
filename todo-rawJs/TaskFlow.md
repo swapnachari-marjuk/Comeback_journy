@@ -27,11 +27,11 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/swapnachari-marjuk
+   git clone https://github.com/swapnachari-marjuk/Comeback_journy
 
 
 2. **Open the project:**
-Simply open `index.html` in your browser or use the **Live Server** extension in VS Code for the best experience.
+Open the root directory and find the directory named todo-raw-js. Then open the todo-raw-js and open *index.html*  in your browser or use the **Live Server** extension in VS Code for the best experience.
 
 ---
 
