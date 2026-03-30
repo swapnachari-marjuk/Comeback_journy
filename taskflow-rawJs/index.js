@@ -64,6 +64,22 @@ function deleteAllCompleted() {
   }
 }
 
+function editTask(taskId) {
+  const tasks = getFromLS();
+  const taskToEdit = tasks.find((task) => task._id == taskId);
+  if (taskToEdit) {
+    const newName = prompt("Edit your task name:", taskToEdit.taskName);
+    if (newName !== null && newName.trim() !== "") { 
+
+      taskToEdit.taskName = newName.trim();
+      setToLS(tasks);
+      alert(`Task ${taskToEdit.taskName} updated successfully!`);
+    } else{
+      alert("Maybe you didn't input a name.")
+    }
+  }
+}
+
 const taskList = document.getElementById("taskList");
 taskList.addEventListener("click", (e) => {
   if (e.target.type === "checkbox") {
@@ -81,6 +97,12 @@ taskList.addEventListener("click", (e) => {
       deleteTask(itemId);
     }
     return;
+  }
+
+  const editBtn = e.target.closest('button[id^="edit-"]');
+  if (editBtn) {
+    const itemId = editBtn.id.replace("edit-", "");
+    editTask(itemId);
   }
 });
 
